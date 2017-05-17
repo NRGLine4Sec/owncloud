@@ -52,7 +52,7 @@ server {
 
   # Répertoire dans lequel est installé Owncloud
   root /var/www/owncloud/;
-  # Taille de fichier maximum  que l'on peut téléverser/uploader
+  # Taille de fichier maximum  que lon peut téléverser/uploader
   client_max_body_size 1G;
   fastcgi_buffers 64 4K;
 
@@ -82,7 +82,7 @@ server {
     }
 
   location / {
-   # Les régles suivantes sont uniquement nécessaire en cas d'utilisation de webfinger
+   # Les régles suivantes sont uniquement nécessaire en cas dutilisation de webfinger
    rewrite ^/.well-known/host-meta /public.php?service=host-meta last;
    rewrite ^/.well-known/host-meta.json /public.php?service=host-meta-json last;
 
@@ -100,14 +100,14 @@ server {
    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
    fastcgi_param PATH_INFO $fastcgi_path_info;
    fastcgi_param HTTPS on;
-   fastcgi_param modHeadersAvailable true; #Evite d'envoyer les header de sécurtié deux fois
+   fastcgi_param modHeadersAvailable true; #Evite denvoyer les header de sécurtié deux fois
    fastcgi_pass php-handler;
    }
 
    # Optionnel : positionne un header EXPIRES long sur les ressources statiques
    location ~* \.(?:jpg|jpeg|gif|bmp|ico|png|css|js|swf)$ {
        expires 30d;
-       # Optionnel : ne pas logger l'accès aux ressources statiques
+       # Optionnel : ne pas logger laccès aux ressources statiques
          access_log off;
    }
   }' >> /etc/nginx/sites-available/owncloud
