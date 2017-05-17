@@ -1,6 +1,6 @@
 apt-get update && apt-get upgrade -y
-apt-get install -y nginx php5 php5-fpm php5-curl php5-mysql php5-gd php5-xmlrpc php5-gd php5-json php5-intl php5-mcrypt php5-imagick php5-ldap mariadb-server mariadb-client php-xml-parser
-apt-get install -y nginx mariadb-server mariadb-client
+apt-get install -y nginx php5 php5-fpm php5-curl php5-mysql php5-gd php5-cli php5-dev memcached php5-memcache varnish php5-common php5-cgi php5-xmlrpc php5-gd php5-json php5-intl php5-mcrypt php5-imagick php5-ldap mariadb-server mariadb-client php-xml-parser
+#apt-get install -y nginx mariadb-server mariadb-client
 #echo "deb http://dl.hhvm.com/debian jessie main" > /etc/apt/sources.list.d/hhvm.list
 #wget -O- http://dl.hhvm.com/conf/hhvm.gpg.key | apt-key add -
 #apt-get update
@@ -8,9 +8,12 @@ apt-get install -y nginx mariadb-server mariadb-client
 #/usr/share/hhvm/install_fastcgi.sh
 #/usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
 #update-rc.d hhvm defaults
+
+owncloud_version="10.0.0"
+
 cd /var/www/html
-wget --no-check-certificate https://download.owncloud.org/community/owncloud-9.1.4.tar.bz2
-tar xjvf owncloud-9.1.4.tar.bz2
+wget --no-check-certificate https://download.owncloud.org/community/owncloud-$owncloud_version.tar.bz2
+tar xjvf owncloud-$owncloud_version.tar.bz2
 chown -R www-data:www-data /var/www/html/owncloud/
 
 
