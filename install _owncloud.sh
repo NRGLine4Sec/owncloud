@@ -9,15 +9,22 @@ apt-get install -y nginx php5 php5-fpm php5-curl php5-mysql php5-gd php5-cli php
 #/usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
 #update-rc.d hhvm defaults
 
+wget -nv https://download.owncloud.org/download/repositories/stable/Debian_8.0/Release.key -O Release.key
+apt-key add - < Release.key
+sh -c "echo 'deb http://download.owncloud.org/download/repositories/stable/Debian_8.0/ /' >> /etc/apt/sources.list.d/owncloud.list"
+apt-get -y update
+apt-get -y install owncloud
+
+
 owncloud_version="10.0.0"
 
 apt-get install -y ntp
 /etc/init.d/ntp start
 
-cd /var/www/html
-wget --no-check-certificate https://download.owncloud.org/community/owncloud-$owncloud_version.tar.bz2
-tar xjvf owncloud-$owncloud_version.tar.bz2
-chown -R www-data:www-data /var/www/html/owncloud/
+#cd /var/www/html
+#wget --no-check-certificate https://download.owncloud.org/community/owncloud-$owncloud_version.tar.bz2
+#tar xjvf owncloud-$owncloud_version.tar.bz2
+#chown -R www-data:www-data /var/www/html/owncloud/
 
 
 echo 'upstream php-handler {
@@ -26,9 +33,8 @@ echo 'upstream php-handler {
 }
 server {
   listen 80;
-  server_name owncloud.memo-linux.com;
+  server_name owncloud;
   # enforce https
-  return 301 https://$server_name$request_uri;
 
   resolver 8.8.8.8;
 
@@ -120,6 +126,6 @@ echo "New MySQL database is successfully created"
 
 # Test de la configuration 
 nginx -t
-service php-fpm start && service php-fpm restart
+service php5-fpm start && service php5-fpm restart
 service nginx restart
 #service php-fpm restart
