@@ -1,6 +1,5 @@
 apt-get update && apt-get upgrade -y
 apt-get install -y nginx php5 php5-fpm php5-curl php5-mysql php5-gd php5-cli php5-dev memcached php5-memcache varnish php5-common php5-cgi php5-xmlrpc php5-gd php5-json php5-intl php5-mcrypt php5-imagick php5-ldap mariadb-server mariadb-client php-xml-parser
-exit 0
 #apt-get install -y nginx mariadb-server mariadb-client
 #echo "deb http://dl.hhvm.com/debian jessie main" > /etc/apt/sources.list.d/hhvm.list
 #wget -O- http://dl.hhvm.com/conf/hhvm.gpg.key | apt-key add -
@@ -18,7 +17,7 @@ apt-get install -y ntp
 cd /var/www/
 wget --no-check-certificate https://download.owncloud.org/community/owncloud-$owncloud_version.tar.bz2
 tar xjvf owncloud-$owncloud_version.tar.bz2
-chown -R www-data:www-data /var/www/owncloud/
+chown -R www-data:www-data /var/www/html/owncloud/
 
 
 echo 'upstream php-handler {
@@ -52,7 +51,7 @@ server {
   add_header X-Robots-Tag none;
 
   # Répertoire dans lequel est installé Owncloud
-  root /var/www/owncloud/;
+  root /var/www/html/owncloud/;
   # Taille de fichier maximum  que lon peut téléverser/uploader
   client_max_body_size 1G;
   fastcgi_buffers 64 4K;
@@ -127,6 +126,6 @@ echo "New MySQL database is successfully created"
 
 # Test de la configuration 
 nginx -t
-service php-fpm restart
+service php-fpm start && service php-fpm restart
 service nginx restart
 #service php-fpm restart
