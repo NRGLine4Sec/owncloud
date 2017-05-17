@@ -20,15 +20,25 @@ wget --no-check-certificate https://download.owncloud.org/community/owncloud-$ow
 tar xjvf owncloud-$owncloud_version.tar.bz2
 chown -R www-data:www-data /var/www/html/owncloud/
 
+mkdir /etc/ssl/nginx/
+openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/nginx/owncloud.key -out /etc/ssl/nginx/owncloud.crt
 
 echo 'upstream php-handler {
-  server 127.0.0.1:9000;
-  #server unix:/var/run/php5-fpm.sock;
+  #server 127.0.0.1:9000;
+  server unix:/var/run/php5-fpm.sock;
 }
 
 server {
   listen 80;
   server_name owncloud;
+  }
+  
+server {
+  listen 443 ssl;
+  server_name owncloud;
+
+  ssl_certificate /etc/ssl/nginx/owncloud.crt;
+  ssl_certificate_key /etc/ssl/nginx/owncloud.key;
   # enforce https
   return 301 https://$server_name$request_uri;
 
