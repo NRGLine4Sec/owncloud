@@ -31,6 +31,9 @@ echo 'upstream php-handler {
 server {
   listen 80;
   server_name owncloud;
+  
+    # enforce https
+  return 301 https://$server_name$request_uri;
   }
   
 server {
@@ -39,8 +42,6 @@ server {
 
   ssl_certificate /etc/ssl/nginx/owncloud.crt;
   ssl_certificate_key /etc/ssl/nginx/owncloud.key;
-  # enforce https
-  return 301 https://$server_name$request_uri;
 
   # Path to the root of your installation
   root /var/www/html/owncloud/;
