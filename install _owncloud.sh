@@ -1,13 +1,13 @@
 apt-get update && apt-get upgrade -y
-#apt-get install -y nginx php5 php5-fpm php5-curl php5-mysql php5-gd php5-cli php5-dev memcached php5-memcache varnish php5-common php5-cgi php5-xmlrpc php5-gd php5-json php5-intl php5-mcrypt php5-imagick php5-ldap mariadb-server mariadb-client php-xml-parser
-apt-get install -y nginx mariadb-server mariadb-client
-echo "deb http://dl.hhvm.com/debian jessie main" > /etc/apt/sources.list.d/hhvm.list
-wget -O- http://dl.hhvm.com/conf/hhvm.gpg.key | apt-key add -
-apt-get update
-apt install -y hhvm
-/usr/share/hhvm/install_fastcgi.sh
-/usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
-update-rc.d hhvm defaults
+apt-get install -y nginx php5 php5-fpm php5-curl php5-mysql php5-gd php5-cli php5-dev memcached php5-memcache varnish php5-common php5-cgi php5-xmlrpc php5-gd php5-json php5-intl php5-mcrypt php5-imagick php5-ldap mariadb-server mariadb-client php-xml-parser
+#apt-get install -y nginx mariadb-server mariadb-client
+#echo "deb http://dl.hhvm.com/debian jessie main" > /etc/apt/sources.list.d/hhvm.list
+#wget -O- http://dl.hhvm.com/conf/hhvm.gpg.key | apt-key add -
+#apt-get update
+#apt install -y hhvm
+#/usr/share/hhvm/install_fastcgi.sh
+#/usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
+#update-rc.d hhvm defaults
 
 
 owncloud_version="10.0.0"
@@ -31,14 +31,6 @@ server {
   server_name owncloud;
   # enforce https
   return 301 https://$server_name$request_uri;
-}
-
-server {
-  listen 443 ssl;
-  server_name owncloud;
-
-  #ssl_certificate /etc/ssl/nginx/cloud.example.com.crt;
-  #ssl_certificate_key /etc/ssl/nginx/cloud.example.com.key;
 
   # Path to the root of your installation
   root /var/www/html/owncloud/;
