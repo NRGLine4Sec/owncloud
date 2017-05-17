@@ -14,10 +14,10 @@ owncloud_version="10.0.0"
 apt-get install -y ntp
 /etc/init.d/ntp start
 
-cd /var/www/html
+cd /var/www/
 wget --no-check-certificate https://download.owncloud.org/community/owncloud-$owncloud_version.tar.bz2
 tar xjvf owncloud-$owncloud_version.tar.bz2
-chown -R www-data:www-data /var/www/html/owncloud/
+chown -R www-data:www-data /var/www/owncloud/
 
 
 echo 'upstream php-handler {
