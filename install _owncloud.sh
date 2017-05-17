@@ -104,11 +104,11 @@ server {
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-XSS-Protection "1; mode=block";
     add_header X-Robots-Tag none;
-    # Optional: Don't log access to assets
+    # Optional: Dont log access to assets
     access_log off;
   }
 
-  # Optional: Don't log access to other assets
+  # Optional: Dont log access to other assets
   location ~* \.(?:jpg|jpeg|gif|bmp|ico|png|swf)$ {
     access_log off;
   }
