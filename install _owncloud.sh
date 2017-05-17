@@ -11,7 +11,7 @@ apt-get install -y nginx php5 php5-fpm php5-curl php5-mysql php5-mysqlnd php5-gd
 
 owncloud_version="10.0.0"
 
-apt-get install ntp
+apt-get install -y ntp
 /etc/init.d/ntp start
 
 cd /var/www/html
