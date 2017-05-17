@@ -1,19 +1,13 @@
 apt-get update && apt-get upgrade -y
-apt-get install -y nginx php5 php5-fpm php5-curl php5-mysql php5-gd php5-cli php5-dev memcached php5-memcache varnish php5-common php5-cgi php5-xmlrpc php5-gd php5-json php5-intl php5-mcrypt php5-imagick php5-ldap mariadb-server mariadb-client php-xml-parser
-#apt-get install -y nginx mariadb-server mariadb-client
-#echo "deb http://dl.hhvm.com/debian jessie main" > /etc/apt/sources.list.d/hhvm.list
-#wget -O- http://dl.hhvm.com/conf/hhvm.gpg.key | apt-key add -
-#apt-get update
-#apt install -y hhvm
-#/usr/share/hhvm/install_fastcgi.sh
-#/usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
-#update-rc.d hhvm defaults
-
-wget -nv https://download.owncloud.org/download/repositories/stable/Debian_8.0/Release.key -O Release.key
-apt-key add - < Release.key
-sh -c "echo 'deb http://download.owncloud.org/download/repositories/stable/Debian_8.0/ /' >> /etc/apt/sources.list.d/owncloud.list"
-apt-get -y update
-apt-get -y install owncloud
+#apt-get install -y nginx php5 php5-fpm php5-curl php5-mysql php5-gd php5-cli php5-dev memcached php5-memcache varnish php5-common php5-cgi php5-xmlrpc php5-gd php5-json php5-intl php5-mcrypt php5-imagick php5-ldap mariadb-server mariadb-client php-xml-parser
+apt-get install -y nginx mariadb-server mariadb-client
+echo "deb http://dl.hhvm.com/debian jessie main" > /etc/apt/sources.list.d/hhvm.list
+wget -O- http://dl.hhvm.com/conf/hhvm.gpg.key | apt-key add -
+apt-get update
+apt install -y hhvm
+/usr/share/hhvm/install_fastcgi.sh
+/usr/bin/update-alternatives --install /usr/bin/php php /usr/bin/hhvm 60
+update-rc.d hhvm defaults
 
 
 owncloud_version="10.0.0"
@@ -21,22 +15,30 @@ owncloud_version="10.0.0"
 apt-get install -y ntp
 /etc/init.d/ntp start
 
-#cd /var/www/html
-#wget --no-check-certificate https://download.owncloud.org/community/owncloud-$owncloud_version.tar.bz2
-#tar xjvf owncloud-$owncloud_version.tar.bz2
-#chown -R www-data:www-data /var/www/html/owncloud/
+cd /var/www/html
+wget --no-check-certificate https://download.owncloud.org/community/owncloud-$owncloud_version.tar.bz2
+tar xjvf owncloud-$owncloud_version.tar.bz2
+chown -R www-data:www-data /var/www/html/owncloud/
 
 
 echo 'upstream php-handler {
   server 127.0.0.1:9000;
   #server unix:/var/run/php5-fpm.sock;
 }
+
 server {
   listen 80;
   server_name owncloud;
   # enforce https
+  return 301 https://$server_name$request_uri;
+}
 
-  resolver 8.8.8.8;
+server {
+  listen 443 ssl;
+  server_name owncloud;
+
+  #ssl_certificate /etc/ssl/nginx/cloud.example.com.crt;
+  #ssl_certificate_key /etc/ssl/nginx/cloud.example.com.key;
 
   # Path to the root of your installation
   root /var/www/html/owncloud/;
@@ -102,11 +104,11 @@ server {
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-XSS-Protection "1; mode=block";
     add_header X-Robots-Tag none;
-    # Optional: Dont log access to assets
+    # Optional: Don't log access to assets
     access_log off;
   }
 
-  # Optional: Dont log access to other assets
+  # Optional: Don't log access to other assets
   location ~* \.(?:jpg|jpeg|gif|bmp|ico|png|swf)$ {
     access_log off;
   }
