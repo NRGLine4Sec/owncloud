@@ -30,7 +30,7 @@ server {
   # enforce https
   return 301 https://$server_name$request_uri;
 
-  resolver 8.8.8.8;##j'ai mon propre serveur dns en local
+  resolver 8.8.8.8;
 
   # Path to the root of your installation
   root /var/www/html/owncloud/;
@@ -100,7 +100,7 @@ server {
     access_log off;
   }
 
-  # Optional: Don't log access to other assets
+  # Optional: Dont log access to other assets
   location ~* \.(?:jpg|jpeg|gif|bmp|ico|png|swf)$ {
     access_log off;
   }
