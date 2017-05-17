@@ -1,5 +1,5 @@
 apt-get update && apt-get upgrade -y
-apt-get install -y nginx php5 php5-fpm php5-curl php5-mysql php5-mysqlnd php5-gd php5-cli php5-dev memcached php5-memcache varnish php5-common php5-cgi php5-xmlrpc php5-gd php5-json php5-intl php5-mcrypt php5-imagick php5-ldap mariadb-server mariadb-client php-xml-parser
+apt-get install -y nginx php5 php5-fpm php5-curl php5-mysql php5-gd php5-cli php5-dev memcached php5-memcache varnish php5-common php5-cgi php5-xmlrpc php5-gd php5-json php5-intl php5-mcrypt php5-imagick php5-ldap mariadb-server mariadb-client php-xml-parser
 exit 0
 #apt-get install -y nginx mariadb-server mariadb-client
 #echo "deb http://dl.hhvm.com/debian jessie main" > /etc/apt/sources.list.d/hhvm.list
@@ -20,7 +20,7 @@ wget --no-check-certificate https://download.owncloud.org/community/owncloud-$ow
 tar xjvf owncloud-$owncloud_version.tar.bz2
 chown -R www-data:www-data /var/www/owncloud/
 
-touch /etc/nginx/sites-available/owncloud
+
 echo 'upstream php-handler {
   server 127.0.0.1:9000;
   #server unix:/var/run/php5-fpm.sock;
